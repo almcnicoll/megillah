@@ -1,0 +1,54 @@
+<%
+var events_by_day = new Object();
+%>
+<ul>
+<% _.each(events, function(event){
+var event_date = new Date(event.start);
+var event_day = '' + event_date.getFullYear()+'-'+((event_date.getMonth()<=10)?'0'+(event_date.getMonth()+1):(event_date.getMonth()+1))+'-'+event_date.getDate();
+if (events_by_day[event_day] === undefined) {
+	events_by_day[event_day] = new Array();
+}
+events_by_day[event_day].push(event);
+//print('<li>' + event_day + '</li>');
+}); %>
+</ul>
+
+<div class='row'>
+	<% _.each(days_name, function(name) { %>
+	<div class='col-xs-12 panel panel-default'>
+		<div class='panel panel-heading'><%= name %> <%= start.getDate() %> <%= cal.locale['ms' + start.getMonth()]
+		%></div>
+		<div class='panel panel-body' id='panel<%= start.getFullYear() %>-<%= start.getMonthFormatted() %>-<%= start.getDateFormatted() %>'>
+			<% _.each(events_by_day[start.getFullYear()+'-'+start.getMonthFormatted()+'-'+start.getDateFormatted()], function(event) { %>
+				<div class="cal-cell<%= event.days%> cal-offset<%= event.start_day %> day-highlight dh-<%= event['class'] %>" data-event-class="<%= event['class'] %>">
+					<a href="<%= event.url ? event.url : 'javascript:void(0)' %>" data-event-id="<%= event.id %>" class="cal-event-week event<%= event.id %>"><%= event.title %></a>
+				</div>
+			<% }); %>
+		</div>
+	</div>
+	<% start.setDate(start.getDate() + 1); %>
+	<% }) %>
+</div>
+
+
+
+<!--
+<div class="cal-week-box">
+	<div class="cal-offset1 cal-column"></div>
+	<div class="cal-offset2 cal-column"></div>
+	<div class="cal-offset3 cal-column"></div>
+	<div class="cal-offset4 cal-column"></div>
+	<div class="cal-offset5 cal-column"></div>
+	<div class="cal-offset6 cal-column"></div>
+	<div class="cal-row-fluid cal-row-head">
+		<% _.each(days_name, function(name) { %>
+			<div class="cal-cell1 <%= cal._getDayClass('week', start) %>" data-toggle="tooltip" title="<%= cal._getHolidayName(start) %>"><%= name %><br>
+				<small><span data-cal-date="<%= start.getFullYear() %>-<%= start.getMonthFormatted() %>-<%= start.getDateFormatted() %>" data-cal-view="day"><%= start.getDate() %> <%= cal.locale['ms' + start.getMonth()] %></span></small>
+			</div>
+			<% start.setDate(start.getDate() + 1); %>
+		<% }) %>
+	</div>
+	<hr>
+	<%= cal._week() %>
+</div>
+-->

@@ -1,0 +1,48 @@
+/* Sticky Footer
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+/* Custom CSS
+-------------------------------------------------- */
+body {
+    padding-top: 75px;
+}
+
+p.note-text {
+    cursor: pointer;
+    white-space: pre-wrap;
+}
+
+a.emphasise-link {
+	/*text-decoration: underline !important;*/
+	color: #337ab7 !important;
+}
+
+tr.complete {
+	text-decoration: line-through;
+	color: #ccc;
+	font-style: italic;
+}
+tr.complete a, tr.complete .dropdown, tr.complete ul {
+	font-style: normal !important;
+	text-decoration: none !important;
+}

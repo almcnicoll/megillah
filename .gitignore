@@ -1,0 +1,7 @@
+app/tmp/
+app/tmp/*
+*.log
+app/Config/database.php
+app/Config/email.php
+app/__OldController/
+app/__OldController/*

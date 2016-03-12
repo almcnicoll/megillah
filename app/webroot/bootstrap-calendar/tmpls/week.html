@@ -1,0 +1,63 @@
+<%
+var events_by_day = new Object();
+%>
+<ul>
+<% _.each(events, function(event){
+var event_date = new Date(event.start + (1000 * 60 * 60 * 3));
+//alert(event_date);
+var event_day = ""  + event_date.getUTCFullYear()
+					+ "-"
+					+ ((event_date.getUTCMonth()<9)?"0"+(event_date.getUTCMonth()+1):(event_date.getUTCMonth()+1))
+					+ "-" 
+					+ ((event_date.getUTCDate()<10)?"0":"") 
+					+ event_date.getUTCDate();
+if (events_by_day[event_day] === undefined) {
+	events_by_day[event_day] = new Array();
+}
+events_by_day[event_day].push(event);
+//print('<li>' + event_day + '</li>');
+}); %>
+</ul>
+
+<div class='row'>
+	<% _.each(days_name, function(name) {
+		var date_ref = start.getFullYear()+"-"+start.getMonthFormatted()+"-"+start.getDateFormatted();
+		//alert(date_ref);
+	%>
+	<ul class='col-xs-12 list-group'>
+		<li class='list-group-item <% if((events_by_day[date_ref] !== undefined) && (events_by_day[date_ref].length)) { print("active"); } else { print("disabled"); } %>'><%= name %> <%= start.getDate() %> <%= cal.locale["ms" + start.getMonth()]
+		%> <span class='badge'><% if((events_by_day[date_ref] !== undefined) && (events_by_day[date_ref].length)) { print(events_by_day[date_ref].length);} %></span></li>
+		
+			<% _.each(events_by_day[date_ref], function(event) { %>
+				<li class="list-group-item day-highlight dh-<%= event["class"] %>" data-event-class="<%= event["class"] %>">
+					<a href="<%= event.url ? event.url : "javascript:void(0)" %>" data-event-id="<%= event.id %>" class="cal-event-week event<%= event.id %>"><%= event.title %></a>
+				</li>
+			<% }); %>
+		
+	</ul>
+	<% start.setUTCDate(start.getUTCDate() + 1); %>
+	<% }) %>
+</div>
+
+
+
+<!--
+<div class="cal-week-box">
+	<div class="cal-offset1 cal-column"></div>
+	<div class="cal-offset2 cal-column"></div>
+	<div class="cal-offset3 cal-column"></div>
+	<div class="cal-offset4 cal-column"></div>
+	<div class="cal-offset5 cal-column"></div>
+	<div class="cal-offset6 cal-column"></div>
+	<div class="cal-row-fluid cal-row-head">
+		<% _.each(days_name, function(name) { %>
+			<div class="cal-cell1 <%= cal._getDayClass('week', start) %>" data-toggle="tooltip" title="<%= cal._getHolidayName(start) %>"><%= name %><br>
+				<small><span data-cal-date="<%= start.getUTCFullYear() %>-<%= start.getUTCMonthFormatted() %>-<%= start.getUTCDateFormatted() %>" data-cal-view="day"><%= start.getUTCDate() %> <%= cal.locale['ms' + start.getUTCMonth()] %></span></small>
+			</div>
+			<% start.setDate(start.getUTCDate() + 1); %>
+		<% }) %>
+	</div>
+	<hr>
+	<%= cal._week() %>
+</div>
+-->

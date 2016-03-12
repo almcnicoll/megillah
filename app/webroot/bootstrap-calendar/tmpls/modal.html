@@ -1,0 +1,54 @@
+<% 	event.date_start = new Date(parseInt(event.start));
+	event.date_end = new Date(parseInt(event.end)); %>
+<div id="event-meta-desc" class="row">
+	<div col='col-xs-12'>
+		<h4 style='margin-left: 20px; margin-right: 20px;'><small><%= ((event.client)?"Client: "+event.client:"") %></small></h4>
+	</div>
+</div>
+<div id="event-meta-desc" class="row">
+	<div col='col-xs-12'>
+		<h4 style='margin-left: 20px; margin-right: 20px; height: 120px; overflow-y: scroll; border: #ccc 1px solid;'><%= event.title.replace("\n","<br />") %></h4>
+	</div>
+</div>
+<div id="event-meta-date" class="row">
+	<div col='col-xs-12'>
+		<h4 style='margin-left: 20px; margin-right: 20px;'><span class = "glyphicon glyphicon-calendar"></span><%= event.date_start.getUTCDate() %> <%= calendar.locale["m" + event.date_start.getUTCMonth()] %> <%= event.date_start.getUTCFullYear() %></h4>
+	</div>
+</div>
+<div id="event-meta-time" class="row">
+	<div col='col-xs-12'>
+		<h4 style='margin-left: 20px; margin-right: 20px;'><span class = "glyphicon glyphicon-time"></span><%= (event.date_start.getUTCHours() < 10?"0":"") + event.date_start.getUTCHours() %>:<%= (event.date_start.getUTCMinutes() < 10?"0":"") + event.date_start.getUTCMinutes() %></h4>
+	</div>
+</div>
+<div class='row'>
+<%
+if ((event.id % 100) != 6) {
+%>
+	<div class='col-xs-6'>
+		<a href = "./view_redirect/<%= event.id %>" class="btn btn-primary" target='_blank' style='width: 100%'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;More info</a>
+	</div>
+<%
+} else {
+%>
+	<div class='col-xs-6'>
+		&nbsp;
+	</div>
+<%
+}
+%>
+<%
+if (event.class == "event-success") {
+%>
+	<div class='col-xs-6'>
+		<a href = "./mark_complete/<%= event.id %>?complete=2" class="btn btn-warning" style='width: 100%'><span class='glyphicon glyphicon-unchecked'></span>&nbsp;Mark as outstanding</a>
+	</div>
+<%
+} else {
+%>
+	<div class='col-xs-6'>
+		<a href = "./mark_complete/<%= event.id %>?complete=1" class="btn btn-success" style='width: 100%'><span class='glyphicon glyphicon-check'></span>&nbsp;Mark as complete</a>
+	</div>
+<%
+}
+%>
+</div>
